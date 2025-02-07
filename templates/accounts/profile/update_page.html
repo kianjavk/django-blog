@@ -2,9 +2,10 @@
 
 
 {% block main %}
-        <h1>Change Password</h1>
-    <form method="post">
+    <form method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Change Password</button>
+        <button type="submit">Update</button>
+    </form>
+
 {% endblock %}

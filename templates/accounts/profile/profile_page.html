@@ -1,0 +1,14 @@
+{% extends 'home/base.html' %}
+
+
+{% block main %}
+    <a href="{% url 'password_change' user.id %}">
+                Change Password
+            </a>
+    <a href="{% url 'update' user.id %}">
+                Update Profile
+            </a>
+    {{ user.full_name }}
+    {{ user.email }}
+    {{ user.birthdate }}
+{% endblock %}

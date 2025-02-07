@@ -8,7 +8,7 @@ from .models import CustomerUser
 class CustomerUserAdmin(UserAdmin):
     form = CustomerUserChangeForm
     add_form = CustomerUserCreationForm
-
+    ordering = ['email']
     list_display = ['email', 'full_name','is_active','is_staff','created_at','updated_at']
     search_fields = ['email']
     readonly_fields = ['last_login']
@@ -18,12 +18,12 @@ class CustomerUserAdmin(UserAdmin):
         return f'{obj.first_name} {obj.last_name}'
 
     fieldsets = (
-        ('Main', {'fields':('first_name','last_name','username', 'email', 'phone','password')}),
+        ('Main', {'fields':('first_name','last_name', 'email','password')}),
         ('permissions',{'fields':('is_active','is_staff','is_superuser','groups','last_login','user_permissions')}),
     )
 
     add_fieldsets = (
-        (None, {'fields':('first_name','last_name','username', 'email', 'phone','password1','password2')}),
+        (None, {'fields':('first_name','last_name','email','password1','password2')}),
     )
 
 

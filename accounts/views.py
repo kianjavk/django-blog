@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login , logout ,authenticate
 from django.views.generic import View
 from .forms import  CustomerUserCreationForm,UserLoginForm,UserUpdateForm
-from .models import CustomerUser,
+from .models import CustomerUser
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -13,8 +13,8 @@ from django.contrib import messages
 
 class UserRegisterView(View):
     form_class = CustomerUserCreationForm
-    template_name = 'accounts/register/signup.html'
-    success_url = reverse_lazy('home_page')
+    template_name = 'accounts/register/register_page.html'
+    success_url = reverse_lazy('home')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -44,12 +44,12 @@ class UserRegisterView(View):
 #       User Login
 class UserLoginView(View):
     form_class = UserLoginForm
-    template_name = 'accounts/login/login.html'
-    success_url = reverse_lazy('accounts:')
+    template_name = 'accounts/login/login_page.html'
+    success_url = reverse_lazy('home')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home_page')
+            return redirect('home')
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -65,7 +65,7 @@ class UserLoginView(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'You are now logged in!', 'success')
-                return redirect('home_page')
+                return redirect('home')
             messages.error(request, ' email or password is wrong!', 'danger')
         return render(request, self.template_name, {'form': form})
 
@@ -75,7 +75,7 @@ class UserLogoutView(LoginRequiredMixin,View):
     def get(self, request):
         logout(request)
         messages.success(request, 'You have been logged out')
-        return redirect('home_page')
+        return redirect('home')
 
 
 class UserProfileView(LoginRequiredMixin,View):
@@ -83,12 +83,12 @@ class UserProfileView(LoginRequiredMixin,View):
     def get(self, request,user_id):
         user = CustomerUser.objects.get(pk=user_id)
         print(f"User: {user}")
-        return render(request,'customer/profile.html',{'user':user})
+        return render(request,'accounts/profile/profile_page.html',{'user':user})
 
 class UpdateProfileView(LoginRequiredMixin,View):
     form_class = UserUpdateForm
-    template_name = 'customer/update.html'
-    success_url = reverse_lazy('customer/profile.html')
+    template_name = "accounts/profile/update_page.html"
+    success_url = reverse_lazy('home')
 
     def get(self, request,user_id):
         user = CustomerUser.objects.get(pk=user_id)

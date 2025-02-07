@@ -1,0 +1,9 @@
+{% if messages %}
+    {% for msg in messages %}
+        <div class="message {{ msg.tags }} p-4 mb-4 rounded-lg shadow-sm">
+            <p class="text-[#1d4d40] font-semibold text-lg">{{ msg }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p class="text-center text-gray-500">No messages to display.</p>
+{% endif %}
